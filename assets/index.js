@@ -86,3 +86,19 @@ var finances = [
   ['Jan-2017', 138230],
   ['Feb-2017', 671099],
 ];
+
+// Opening
+console.log("Financial Analysis")
+console.log("----------------------------")
+
+// The total number of months included in the dataset.
+monthTotal = finances.length
+console.log("Total Months: " + monthTotal)
+
+// The net total amount of Profit/Losses over the entire period.
+let netTotal = finances.map(function(data) {
+  return data[1]})
+  .reduce(function(month,money) {return month + money});
+  console.log("Total: $" + netTotal)
+
+// You will need to track what the total change in profits is from month to month and then find the average.
