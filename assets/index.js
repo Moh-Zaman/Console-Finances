@@ -95,10 +95,49 @@ console.log("----------------------------")
 monthTotal = finances.length
 console.log("Total Months: " + monthTotal)
 
-// The net total amount of Profit/Losses over the entire period.
-let netTotal = finances.map(function(data) {
-  return data[1]})
-  .reduce(function(month,money) {return month + money});
-  console.log("Total: $" + netTotal)
+// Flatten Array
+const slicedArray = finances.map(function(data) {
+  return data[1]
+})
 
-// You will need to track what the total change in profits is from month to month and then find the average.
+// The net total amount of Profit/Losses over the entire period.
+let netTotal = slicedArray.reduce(function(month,money) {
+  return month + money});
+console.log("Total: $" + netTotal)
+
+// Month to Month Average / The greatest increase in profits (date and amount) over the entire period / The greatest decrease in losses (date and amount) over the entire period.
+var totalChange = 0;
+var monthlyChanges = 0;
+var greatestI = {
+  month: "",
+  money: 0
+};
+var greatestD = {
+  month: "",
+  money: 0
+};
+
+for (var i = 1; i < finances.length; i++) {
+  var cProfit = finances[i][1];
+  var pProfit = finances[i - 1][1];
+  var pChange = cProfit - pProfit;
+  totalChange += pChange;
+  monthlyChanges++;
+
+  if (pChange > greatestI.money) {
+    greatestI.month = finances[i][0];
+    greatestI.money = pChange;
+  }
+  
+  if (pChange < greatestD.money) {
+    greatestD.month = finances[i][0];
+    greatestD.money = pChange;
+  }
+
+}
+
+var aChanges = parseFloat(totalChange / monthlyChanges).toFixed(2);
+
+console.log("Average Change: " + aChanges)
+console.log("Greatest Increase in Profits/Losses: " + greatestI.month + " ($" + Math.abs(greatestI.money) + ") ")
+console.log("Greatest Increase in Profits/Losses: " + greatestD.month + " ($" + Math.abs(greatestD.money) + ") ")
