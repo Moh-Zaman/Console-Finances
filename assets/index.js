@@ -95,15 +95,14 @@ console.log("----------------------------")
 monthTotal = finances.length
 console.log("Total Months: " + monthTotal)
 
-// Flatten Array
-const slicedArray = finances.map(function(data) {
-  return data[1]
-})
-
 // The net total amount of Profit/Losses over the entire period.
-let netTotal = slicedArray.reduce(function(month,money) {
-  return month + money});
-console.log("Total: $" + netTotal)
+let sum = 0;
+for (var i = 0; i < finances.length; i++) {
+    var overallProfits = finances[i][1]
+  sum += overallProfits
+}
+
+console.log("Total $" + sum)
 
 // Month to Month Average / The greatest increase in profits (date and amount) over the entire period / The greatest decrease in losses (date and amount) over the entire period.
 var totalChange = 0;
